@@ -1,20 +1,42 @@
 package com.ute.testgit
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var edtNumberA: EditText
+    private lateinit var edtNumberB: EditText
+    private lateinit var btnSum: Button
+    private lateinit var btnCheckPrimeA: Button
+    private lateinit var tvResult: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        initViews()
+        setupListeners()
+    }
+
+    private fun initViews() {
+        edtNumberA = findViewById(R.id.edtNumberA)
+        edtNumberB = findViewById(R.id.edtNumberB)
+        btnSum = findViewById(R.id.btnSum)
+        btnCheckPrimeA = findViewById(R.id.btnCheckPrimeA)
+        tvResult = findViewById(R.id.tvResult)
+    }
+
+    private fun setupListeners() {
+        // Câu 1 - Ý 3: Bắt sự kiện bấm nút tính tổng
+        btnSum.setOnClickListener {
+            val numA = edtNumberA.getIntValueOrShowError("Số A không hợp lệ") ?: return@setOnClickListener
+            val numB = edtNumberB.getIntValueOrShowError("Số B không hợp lệ") ?: return@setOnClickListener
+
+            val sum = numA + numB
+            tvResult.text = "Kết quả: $numA + $numB = $sum"
         }
     }
 }
