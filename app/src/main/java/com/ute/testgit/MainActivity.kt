@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var edtNumberA: EditText
     private lateinit var edtNumberB: EditText
     private lateinit var btnSum: Button
@@ -30,13 +31,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-        // Câu 1 - Ý 3: Bắt sự kiện bấm nút tính tổng
+        // Câu 1 - Ý 3
         btnSum.setOnClickListener {
             val numA = edtNumberA.getIntValueOrShowError("Số A không hợp lệ") ?: return@setOnClickListener
             val numB = edtNumberB.getIntValueOrShowError("Số B không hợp lệ") ?: return@setOnClickListener
 
             val sum = numA + numB
             tvResult.text = "Kết quả: $numA + $numB = $sum"
+        }
+
+        // Câu 2 - Ý 2: Gọi hàm từ MathHelper kiểm tra số nguyên tố
+        btnCheckPrimeA.setOnClickListener {
+            val numA = edtNumberA.getIntValueOrShowError("Vui lòng nhập số A hợp lệ") ?: return@setOnClickListener
+
+            val isPrime = MathHelper.isPrime(numA)
+            if (isPrime) {
+                tvResult.text = "Kết quả: Số $numA LÀ số nguyên tố"
+            } else {
+                tvResult.text = "Kết quả: Số $numA KHÔNG PHẢI là số nguyên tố"
+            }
         }
     }
 }
